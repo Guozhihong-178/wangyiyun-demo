@@ -47,15 +47,14 @@
           musicList.name
         }}</Vue3Marquee>
         <div class="name">
-          <span v-for="(item, index) in musicList.ar" :key="item">
+          <span v-for="(item, index) in musicList.ar" :key="item" class="namebox">
             {{ item.name }}
             <span
               v-if="
                 musicList.ar.length > 1 && index !== musicList.ar.length - 1
               "
-            >
-              /
-            </span>
+              style="font-size: .36rem;padding:0.04rem 0.05rem 0"
+            > / </span>
           </span>
           <svg class="icon liebiao" aria-hidden="true">
             <use xlink:href="#icon-arrow-right"></use>
@@ -119,10 +118,19 @@ export default {
       this.updateDetailShow();
       setTimeout(() => this.isLyricShow = false,"1000")
     },
+    goPlay: function (num) {
+      let index = this.playListIndex + num;
+      if (index < 0) {
+        index = this.playList.length - 1;
+      } else if (index == this.playList.length) {
+        index = 0;
+      }
+      this.updatePlayListIndex(index);
+    },
     ...mapMutations(["updateDetailShow", "updatePlayListIndex"]),
   },
   computed: {
-    ...mapState(["musiclistName", "lyricList", "currentTime"]),
+    ...mapState(["musiclistName", "lyricList", "currentTime", "playListIndex", "playList"]),
     lyric: function () {
       let arr;
       if (this.lyricList.lyric) {
@@ -311,9 +319,10 @@ export default {
         justify-content: start;
         align-items: center;
         color: #fff;
-        span {
+        .namebox {
           font-size: .3rem;
           display: flex;
+          align-items: center;
           white-space: nowrap;
         }
         .icon {
