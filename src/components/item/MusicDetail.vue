@@ -13,7 +13,11 @@
       </svg>
     </div>
   </div>
-  <div class="detailContent" @click="isLyricShow=!isLyricShow" v-show="!isLyricShow">
+  <div
+    class="detailContent"
+    @click="isLyricShow = !isLyricShow"
+    v-show="!isLyricShow"
+  >
     <img
       src="@/assets/needle-ab.png"
       alt=""
@@ -28,7 +32,12 @@
       :class="{ img_ar_active: !isbtnShow, img_ar_pauesd: isbtnShow }"
     />
   </div>
-  <div class="musicLyric" ref="musicLyric" @click="isLyricShow=!isLyricShow" v-show="isLyricShow">
+  <div
+    class="musicLyric"
+    ref="musicLyric"
+    @click="isLyricShow = !isLyricShow"
+    v-show="isLyricShow"
+  >
     <p
       v-for="item in lyric"
       :key="item"
@@ -47,14 +56,20 @@
           musicList.name
         }}</Vue3Marquee>
         <div class="name">
-          <span v-for="(item, index) in musicList.ar" :key="item" class="namebox">
+          <span
+            v-for="(item, index) in musicList.ar"
+            :key="item"
+            class="namebox"
+          >
             {{ item.name }}
             <span
               v-if="
                 musicList.ar.length > 1 && index !== musicList.ar.length - 1
               "
-              style="font-size: .36rem;padding:0.04rem 0.05rem 0"
-            > / </span>
+              style="font-size: 0.36rem; padding: 0.04rem 0.05rem 0"
+            >
+              /
+            </span>
           </span>
           <svg class="icon liebiao" aria-hidden="true">
             <use xlink:href="#icon-arrow-right"></use>
@@ -70,7 +85,16 @@
         </svg>
       </div>
     </div>
-    <div class="bottomContent"></div>
+    <div class="bottomContent">
+      <input
+        type="range"
+        class="range"
+        min="0"
+        :max="duration"
+        v-model="currentTime"
+        step="0.05"
+      />
+    </div>
     <div class="bigIcon">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-shuaxin"></use>
@@ -111,12 +135,13 @@ export default {
   },
   mounted() {
     // console.log(this.musicList);
+    this.addDuration();
   },
-  props: ["musicList", "isbtnShow", "play"],
+  props: ["musicList", "isbtnShow", "play", "addDuration"],
   methods: {
     backHome: function () {
       this.updateDetailShow();
-      setTimeout(() => this.isLyricShow = false,"1000")
+      setTimeout(() => (this.isLyricShow = false), "1000");
     },
     goPlay: function (num) {
       let index = this.playListIndex + num;
@@ -130,7 +155,14 @@ export default {
     ...mapMutations(["updateDetailShow", "updatePlayListIndex"]),
   },
   computed: {
-    ...mapState(["musiclistName", "lyricList", "currentTime", "playListIndex", "playList"]),
+    ...mapState([
+      "musiclistName",
+      "lyricList",
+      "currentTime",
+      "playListIndex",
+      "playList",
+      "duration",
+    ]),
     lyric: function () {
       let arr;
       if (this.lyricList.lyric) {
@@ -171,14 +203,14 @@ export default {
           this.$refs.musicLyric.scrollTop = p.offsetTop - 250;
         }
       }
-      // if (newValue === this.duration) {
-      //   if (this.playListIndex === this.playList.length - 1) {
-      //     this.updatePlayListIndex(0);
-      //     this.play();
-      //   } else {
-      //     this.updatePlayListIndex(this.playListIndex + 1);
-      //   }
-      // }
+      if (newValue === this.duration) {
+        if (this.playListIndex === this.playList.length - 1) {
+          this.updatePlayListIndex(0);
+          this.play();
+        } else {
+          this.updatePlayListIndex(this.playListIndex + 1);
+        }
+      }
       // console.log([this.$refs.musicLyric])
     },
   },
@@ -343,6 +375,14 @@ export default {
       width: 0.64rem;
       height: 0.64rem;
       fill: #fff;
+    }
+  }
+  .bottomContent{
+    height: 30px;
+    margin-bottom: 10px;
+    .range {
+      width: 100%;
+      height: 0.06rem;
     }
   }
   .bigIcon {

@@ -36,6 +36,7 @@
         :musicList="playList[playListIndex]"
         :play="play"
         :isbtnShow="isbtnShow"
+        :addDuration="addDuration"
       />
     </van-popup>
   </div>
@@ -66,15 +67,18 @@ export default {
     },
     updateTime: function () {
       this.interVal = setInterval(() => {
-        console.log(this.$refs.audio.currentTime);
+        // console.log(this.$refs.audio.currentTime);
         this.updateCurrentTime(this.$refs.audio.currentTime);
       }, 1000);
+    },
+    addDuration:function(){
+      this.updateDuration(this.$refs.audio.duration)
     },
     ...mapMutations([
       "updateIsbtnShow",
       "updateDetailShow",
       "updateCurrentTime",
-      //   "updateDuration"
+      "updateDuration",
     ]),
   },
   watch: {

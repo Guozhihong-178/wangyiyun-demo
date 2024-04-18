@@ -21,7 +21,7 @@ export default createStore({
     musiclistName : "我喜欢的音乐",
     lyricList:{},//歌词
     currentTime:0,//当前时间
-
+    duration:0,//歌曲总时长
   },
   getters: {
   },
@@ -41,7 +41,6 @@ export default createStore({
     },
     updateMusicListName: function(state, value) {
       state.musiclistName = value
-      console.log(state.musiclistName);
     },
     updateLyricList:function(state,value){
       state.lyricList=value
@@ -49,6 +48,9 @@ export default createStore({
     updateCurrentTime:function(state,value){
       // console.log(state.currentTime);
       state.currentTime=value
+    },
+    updateDuration:function(state,value){
+      state.duration=value
     },
   },
   // 操作异步操作mutation
