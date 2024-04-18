@@ -80,6 +80,7 @@ export default {
   watch: {
     playListIndex: function () {
       //监听如果下标发生了改变，就自动播放音乐
+      this.updateTime();
       this.$refs.audio.autoplay = true;
       if (this.$refs.audio.paused) {
         //如果是暂停状态，改变图标
