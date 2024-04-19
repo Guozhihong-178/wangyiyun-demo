@@ -23,11 +23,25 @@ export function getSearchMusic(keyWord){
 
 /* 发送手机验证码 */
 export function postNumber(phone) {
-    return axios.get(`/captcha/sent?phone=${phone}`)
+    return service({
+        method:'Get',
+        url: `/captcha/sent?phone=${phone}`
+    })
 }
 
 /* 验证手机验证码是否正确 */
 export function checkVerCode(phone, code)
 {
-    return axios.get(`/captcha/verify?phone=${phone}&captcha=${code}`)
+    return service({
+        method:'Get',
+        url: `/captcha/verify?phone=${phone}&captcha=${code}`
+    })
+}
+
+//登录
+export function getPhoneLogin(data){
+    return service({
+        method:"GET",
+        url:`/login/cellphone?phone=${data.phone}&captcha=${data.password}`
+    })
 }

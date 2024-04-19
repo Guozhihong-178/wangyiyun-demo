@@ -10,19 +10,18 @@
           type="text"
           name="phone"
           class="phone"
-          v-model="phone"
+          v-model.trim="number"
           placeholder="请输入手机号码"
+          @focus="onFocus"
         />
-        <input
-          type="password"
-          name="passworld"
-          class="passworld"
-          v-model="password"
-          placeholder="请输入密码"
-        />
-        <button class="btn" @click="Login">获取验证码</button>
-        <!-- </router-link> -->
+          <button
+            :class="isActive ? 'isButton' : 'btn'"
+            @click="handleLogin(isActive)"
+          >
+            获取验证码
+          </button>
       </div>
+
       <!-- <div class="bottom-icon">
         <div class="icon-radio"><i class="iconfont icon-weixin"></i></div>
         <div class="icon-radio"><i class="iconfont icon-QQ"></i></div>
@@ -36,35 +35,51 @@
         <p>我已阅读并同意《服务条款》、《隐私政策》</p>
       </div>
     </div>
+    <van-number-keyboard
+      v-model="number"
+      :show="showKeyboard"
+      @blur="showKeyboard = false"
+    />
   </div>
 </template>
 
 <script>
-import { postNumber } from "@/request/api/home.js"
+import { postNumber } from "@/request/api/home.js";
+import { isPhoneNumber } from "../../utils/checkPhone";
 
 export default {
   data() {
     return {
-      phone: "",
-      password: "",
+      isActive: true,
+      number: "",
+      showKeyboard: false,
     };
+  },
+  watch: {
+    number(newNumber) {
+      if (newNumber.length !== 0) {
+        this.isActive = false;
+      }
+    },
   },
   methods: {
     async handleLogin(value) {
-      if (!isPhoneNumber(number.value) && value == false) {
-        return ElMessage.error("手机号不合格！");
+      if (!isPhoneNumber(this.number) && value == false) {
+        return alert("手机号不合格！");
       } else if (value == false) {
-        let phoneInfo = number.value;
+        let phoneInfo = this.number;
         let res = await postNumber(phoneInfo);
         sessionStorage.setItem("phone", phoneInfo);
-        console.log(res);
+        // console.log(res);
 
-        router.push({
-          path: "/login/phone/vcode",
-          name: "Vcode",
+        this.$router.push({
+          path: "/login/vcode",
         });
       }
-    }
+    },
+    onFocus() {
+      this.showKeyboard = true;
+    },
   },
 };
 </script>
@@ -85,7 +100,7 @@ export default {
     border-radius: 50%;
     overflow: hidden;
     position: absolute;
-    top: 25%;
+    top: 22%;
     left: 50%;
     transform: translateX(-50%);
     img {
@@ -94,7 +109,7 @@ export default {
   }
   .bottom {
     position: absolute;
-    bottom: 80px;
+    bottom: 110px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -102,7 +117,7 @@ export default {
     justify-content: center;
     align-items: center;
     .top-bottom {
-      margin-bottom: 20px;
+      margin-bottom: 100px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -128,13 +143,26 @@ export default {
         border-radius: 0.5rem;
         font-size: 17px;
         font-weight: 600;
-        margin-top: 10px;
+        margin-top: 15px;
+      }
+      .isButton {
+        background: #eb3a3a;
+        color: #fff;
+        border: none;
+        width: 5.6rem;
+        height: 0.9rem;
+        border-radius: 0.5rem;
+        font-size: 17px;
+        font-weight: 600;
+        margin-top: 15px;
+        opacity: 0.2;
       }
     }
     .degree {
       display: flex;
       align-items: center;
       white-space: nowrap;
+      
       p {
         padding-left: 4px;
       }

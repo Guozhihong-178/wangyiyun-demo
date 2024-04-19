@@ -63,6 +63,16 @@ export default createStore({
     updatePlayListAl:function(state,value){
       state.playList.al = value
     },
+    updateIsLogin:function(state,value){
+      state.isLogin=true
+    },
+    updateToken:function(state,value){
+      state.token=value
+      localStorage.setItem('token',state.token)
+    },
+    updateUser:function(state,value){
+      state.user=value
+    }
   },
   // 操作异步操作mutation
   actions: {
