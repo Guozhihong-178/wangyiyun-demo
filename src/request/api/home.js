@@ -12,3 +12,11 @@ export function getMusicList(){
         url: '/personalized?limit=10'
     })
 }
+
+export function getSearchMusic(keyWord){
+    return service({
+        method:'Get',
+        url: `/search?keywords=${keyWord}`
+    })
+}
+

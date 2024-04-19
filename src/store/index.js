@@ -52,6 +52,12 @@ export default createStore({
     updateDuration:function(state,value){
       state.duration=value
     },
+    pushPlayList:function(state,value){
+      state.playList.push(value)
+    },
+    updatePlayListAl:function(state,value){
+      state.playList.al = value
+    },
   },
   // 操作异步操作mutation
   actions: {

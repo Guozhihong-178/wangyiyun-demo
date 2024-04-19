@@ -106,6 +106,7 @@ export default {
     }
   }
   .itemList {
+    padding-bottom: .4rem;
     .item {
       display: flex;
       align-items: center;

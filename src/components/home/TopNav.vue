@@ -12,7 +12,7 @@
       <span>视频</span>
     </div>
     <div>
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon" aria-hidden="true" @click="$router.push('/search')">
         <use xlink:href="#icon-search"></use>
       </svg>
     </div>
