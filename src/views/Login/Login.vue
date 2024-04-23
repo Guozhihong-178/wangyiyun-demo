@@ -68,9 +68,8 @@ export default {
         return alert("手机号不合格！");
       } else if (value == false) {
         let phoneInfo = this.number;
-        let res = await postNumber(phoneInfo);
+        await postNumber(phoneInfo);
         sessionStorage.setItem("phone", phoneInfo);
-        // console.log(res);
 
         this.$router.push({
           path: "/login/vcode",

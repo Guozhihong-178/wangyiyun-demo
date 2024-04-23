@@ -39,9 +39,24 @@ export function checkVerCode(phone, code)
 }
 
 //登录
-export function getPhoneLogin(data){
+// export function getPhoneLogin(data){
+//     return service({
+//         method:"POST",
+//         url:`/login/cellphone?phone=${data.phone}&captcha=${data.captcha}`,
+//         withCredentials: true,
+//     })
+// }
+export function getPhoneLogin(){
     return service({
         method:"GET",
-        url:`/login/cellphone?phone=${data.phone}&captcha=${data.password}`
+        url:`/register/anonimous`,
+    })
+}
+
+//获取用户详情
+export function getLoginUser(){
+    return service({
+        method:"GET",
+        url:`/user/detail?uid=1443539702`
     })
 }

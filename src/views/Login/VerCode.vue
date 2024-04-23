@@ -36,72 +36,99 @@
 <script>
 import { ref, watch } from "vue";
 import { phoneNumFilter } from "../../utils/checkPhone";
-import { checkVerCode } from "@/request/api/home.js";
+import { checkVerCode, getLoginUser } from "@/request/api/home.js";
 import { useRouter } from "vue-router";
 export default {
-  // data() {
-  //   return {
-  //     showKeyboard: false,
-  //     verCode: "",
-  //     phoneInfo: "",
-  //     phoneNumber: "",
-  //   };
-  // },
-  // mounted() {
-  //   this.phoneInfo = phoneNumFilter(sessionStorage.getItem("phone"));
-  //   this.phoneNumber = sessionStorage.getItem("phone");
-  // },
-  // watch: {
-  //   async verCode(newCode) {
-  //     if (newCode.length == 4) {
-  //       // let res = await checkVerCode(phoneNumber, newCode);
-  //       // console.log(res);
+  data() {
+    return {
+      showKeyboard: false,
+      verCode: "",
+      phoneInfo: "",
+      phoneNumber: "",
+      status: "",
+    };
+  },
+  mounted() {
+    this.phoneInfo = phoneNumFilter(sessionStorage.getItem("phone"));
+    this.phoneNumber = sessionStorage.getItem("phone");
+  },
+  watch: {
+    async verCode(newCode) {
+      if (newCode.length == 4) {
+        let res = await checkVerCode(this.phoneNumber, newCode);
+        // console.log("checkVerCode");
+        // console.log(res.data);
+        if (res.status == 200) {
+          let result = await getLoginUser();
+          this.$store.commit("updateIsLogin", true);
+          // this.$store.commit("updateToken", result.data.token);
+          console.log(result);
+          this.$store.commit("updateUser", result.data);
+          sessionStorage.setItem("user", JSON.stringify(result.data));
+          this.$router.push("/userInfo");
+          // let result = await this.$store.dispatch("getLogin");
+          // console.log("登录" + result);
+          // if (result.data.code === 200) {
+          //   this.$store.commit("updateIsLogin", true);
+          //   this.$store.commit("updateToken", result.data.token);
+          //   let resuser = await getLoginUser(res.data.account.id);
+          //   console.log(resuser);
+          //   this.$store.commit("updateUser", resuser);
+          //   this.$router.push("/infoUser");
+          // }
+          // } else {
+          //   alert("验证码错误！");
+          //   router.push({
+          //     path: "/login",
+          //   });
+          // }
+          /* time = setTimeout(async () => {
+          //let res = await checkVerCode(phoneNumber, newCode);
+
+        }); */
+        } else {
+          alert("验证码错误");
+          this.verCode = "";
+        }
+      }
+    },
+  },
+  // setup() {
+  //   const router = useRouter();
+
+  //   let showKeyboard = ref(false);
+  //   let verCode = ref();
+
+  //   let phoneInfo = ref("");
+  //   let phoneNumber = ref("");
+  //   let status = ref("");
+  //   phoneInfo.value = phoneNumFilter(sessionStorage.getItem("phone"));
+  //   phoneNumber.value = sessionStorage.getItem("phone");
+  //   //console.log(verCode.length);
+
+  //   let time = "";
+
+  //   watch(verCode, (newCode) => {
+  //     clearTimeout(time);
+  //     /* time = setTimeout(async () => {
+  //         //let res = await checkVerCode(phoneNumber, newCode);
+
+  //       }); */
+  //     if (newCode.length == 4 && status.value == '200') {
   //       router.push({
   //         path: "/",
   //         name: "home",
   //       });
-  //       /* time = setTimeout(async () => {
-  //         //let res = await checkVerCode(phoneNumber, newCode);
-
-  //       }); */
   //     }
-  //   },
+  //   });
+
+  //   return {
+  //     showKeyboard,
+  //     verCode,
+  //     phoneInfo,
+  //     phoneNumber,
+  //   };
   // },
-  setup() {
-    const router = useRouter();
-
-    let showKeyboard = ref(false);
-    let verCode = ref();
-
-    let phoneInfo = ref("");
-    let phoneNumber = ref("");
-    phoneInfo.value = phoneNumFilter(sessionStorage.getItem("phone"));
-    phoneNumber.value = sessionStorage.getItem("phone");
-    //console.log(verCode.length);
-
-    let time = "";
-
-    watch(verCode, (newCode) => {
-      clearTimeout(time);
-      if (newCode.length == 4) {
-        router.push({
-          path: "/",
-          name: "home",
-        });
-        /* time = setTimeout(async () => {
-          //let res = await checkVerCode(phoneNumber, newCode);
-
-        }); */
-      }
-    });
-
-    return {
-      showKeyboard,
-      verCode,
-      phoneInfo,
-      phoneNumber,
-    };
-  },
 };
 </script>
 

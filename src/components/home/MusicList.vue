@@ -7,7 +7,7 @@
     <div class="content">
       <van-swipe
         :loop="false"
-        :width="150"
+        :width="state.swiperWidth"
         class="my-swiper"
         :show-indicators="false"
       >
@@ -62,6 +62,7 @@ export default {
   setup() {
     const state = reactive({
       musicList: [],
+      swiperWidth: 150,
     });
     function getCount(num) {
       if (num >= 100000000) {
@@ -75,6 +76,8 @@ export default {
     onMounted(async () => {
       let res = await getMusicList();
       state.musicList = res.data.result;
+      state.swiperWidth = (window.innerWidth) >= 750 ? 300 : 150;
+      console.log(state.swiperWidth);
     });
     return { state, getCount };
   },
@@ -86,6 +89,7 @@ export default {
   width: 100%;
   height: 5rem;
   padding: 0.3rem 0.2rem;
+  margin-bottom: 2rem;
   .top {
     width: 100%;
     height: 0.6rem;

@@ -190,6 +190,7 @@ export default {
           }
         });
       }
+      console.log('单句歌词');
       console.log(arr);
       return arr;
     },
@@ -318,7 +319,7 @@ export default {
 }
 .musicLyric {
   width: 100%;
-  height: 8rem;
+  height: 7.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
