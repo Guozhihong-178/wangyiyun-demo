@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import getVant from './plugins'
 import Vuex from 'vuex'
+import 'vant/lib/index.css';
+
+
 
 // import { Swipe, SwipeItem, Button, Lazyload } from 'vant'
 

@@ -24,3 +24,10 @@ export function getMusicLyric(id){
     })
 }
 
+//音乐是否可用
+export function getMusicPlay(id){
+    return service({
+        method:'Get',
+        url:`/check/music?id=${id}`
+    })
+}

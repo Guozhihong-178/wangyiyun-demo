@@ -31,7 +31,7 @@
         </div>
       </div> -->
       <div class="degree">
-        <input type="radio" />
+        <input type="radio" checked />
         <p>我已阅读并同意《服务条款》、《隐私政策》</p>
       </div>
     </div>
@@ -46,6 +46,7 @@
 <script>
 import { postNumber } from "@/request/api/home.js";
 import { isPhoneNumber } from "../../utils/checkPhone";
+import { showFailToast } from 'vant';
 
 export default {
   data() {
@@ -65,7 +66,7 @@ export default {
   methods: {
     async handleLogin(value) {
       if (!isPhoneNumber(this.number) && value == false) {
-        return alert("手机号不合格！");
+        return showFailToast('手机号不正确');
       } else if (value == false) {
         let phoneInfo = this.number;
         await postNumber(phoneInfo);

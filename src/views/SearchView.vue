@@ -37,7 +37,11 @@
             <span class="songIntro">
               <span v-for="(item1, index) in item.artists" :key="index">
                 {{ item1.name }}
-                <span v-if="item.artists.length > 1 && index !== item.artists.length - 1">
+                <span
+                  v-if="
+                    item.artists.length > 1 && index !== item.artists.length - 1
+                  "
+                >
                   /
                 </span>
               </span>
@@ -59,7 +63,9 @@
 
 <script>
 import { getSearchMusic } from "@/request/api/home.js";
+import { getMusicPlay } from "@/request/api/item";
 import { mapMutations, mapState } from "vuex";
+import { showToast } from 'vant';
 
 export default {
   data() {
@@ -96,20 +102,35 @@ export default {
       this.keyWorldList = [];
     },
     async searchHistory(item) {
+      this.keyWorldList.unshift(item);
       let res = await getSearchMusic(item);
-    //   console.log(res);
+      //   console.log(res);
       this.searchList = res.data.result.songs;
       console.log(this.searchList);
     },
-    updateIndex(item) {
+    async updateIndex(item) {
       item.al = item.album;
       item.al.picUrl = item.album.artist.img1v1Url;
       item.ar = item.artists;
       this.pushPlayList(item);
-      this.updatePlayListIndex(this.$store.state.playList.length - 1);
-      this.updateMusicListName('搜索')
+      try {
+        const res = await getMusicPlay(item.al.id);
+        if (res.status === 200) {
+          this.updatePlayListIndex(this.$store.state.playList.length - 1);
+          this.updateMusicListName("搜索");
+        } else {
+          showToast('播放失败');
+        }
+      } catch (error) {
+        console.error("获取音乐播放信息失败:", error);
+        showToast("获取音乐播放信息失败");
+      }
     },
-    ...mapMutations(["pushPlayList", "updatePlayListIndex", "updateMusicListName"]),
+    ...mapMutations([
+      "pushPlayList",
+      "updatePlayListIndex",
+      "updateMusicListName",
+    ]),
   },
 };
 </script>
@@ -172,7 +193,7 @@ export default {
     }
   }
   .itemList {
-    padding: 0 .26rem .4rem;
+    padding: 0 0.26rem 0.4rem;
     .item {
       display: flex;
       align-items: center;

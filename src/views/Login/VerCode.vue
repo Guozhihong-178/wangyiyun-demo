@@ -38,6 +38,8 @@ import { ref, watch } from "vue";
 import { phoneNumFilter } from "../../utils/checkPhone";
 import { checkVerCode, getLoginUser } from "@/request/api/home.js";
 import { useRouter } from "vue-router";
+import { showToast } from 'vant';
+
 export default {
   data() {
     return {
@@ -87,7 +89,7 @@ export default {
 
         }); */
         } else {
-          alert("验证码错误");
+          showToast("验证码错误");
           this.verCode = "";
         }
       }

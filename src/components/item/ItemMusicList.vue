@@ -47,6 +47,8 @@
 </template>
 <script>
 import { mapMutations } from "vuex";
+import { getMusicPlay } from "@/request/api/item";
+import { showToast } from "vant";
 
 export default {
   setup(props) {
@@ -54,9 +56,20 @@ export default {
   },
   props: ["songs"],
   methods: {
-    playMusic: function (index) {
+    playMusic: async function (index) {
       this.updatePlayList(this.songs);
-      this.updatePlayListIndex(index);
+      try {
+        const res = await getMusicPlay(this.songs[index].id);
+        if (res.status === 200) {
+          this.updatePlayListIndex(index);
+        } else {
+          this.updatePlayListIndex(index + 1);
+        }
+      } catch (error) {
+        console.error("获取音乐播放信息失败:", error);
+        showToast("获取音乐播放信息失败");
+        this.updatePlayListIndex(index + 1);
+      }
     },
     ...mapMutations(["updatePlayList", "updatePlayListIndex"]),
   },
@@ -106,7 +119,7 @@ export default {
     }
   }
   .itemList {
-    padding-bottom: .4rem;
+    padding-bottom: 0.4rem;
     .item {
       display: flex;
       align-items: center;

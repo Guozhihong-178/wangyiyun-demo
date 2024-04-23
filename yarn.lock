@@ -5643,10 +5643,10 @@
     "spdx-correct" "^3.0.0"
     "spdx-expression-parse" "^3.0.0"
 
-"vant@^4.8.10":
-  "integrity" "sha512-JKfywSAwxVrY6q2KbESdW9IyGMeOFKa8ub3DLluTaYV7ff4ECXFilkjMeRYVT4hdsNcNii6KCQF6mUYyI56SBA=="
-  "resolved" "https://registry.npmmirror.com/vant/-/vant-4.8.10.tgz"
-  "version" "4.8.10"
+"vant@^4.8.11":
+  "integrity" "sha512-RRkcxIZG6hysmykOXD3aQGffNjROm/aV52UVOOtaVx4GmrXSW/lpnmyMhiZ6lXWx+G2aU1xP08Y1WpsPCBwYig=="
+  "resolved" "https://registry.npmmirror.com/vant/-/vant-4.8.11.tgz"
+  "version" "4.8.11"
   dependencies:
     "@vant/popperjs" "^1.3.0"
     "@vant/use" "^1.6.0"
