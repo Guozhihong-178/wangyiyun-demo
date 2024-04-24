@@ -31,3 +31,11 @@ export function getMusicPlay(id){
         url:`/check/music?id=${id}`
     })
 }
+
+//歌曲评论
+export function getSongComments(id){
+    return service({
+        method:'Get',
+        url:`/comment/music?id=${id}&limit=20`
+    })
+}

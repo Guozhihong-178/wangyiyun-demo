@@ -79,8 +79,8 @@ export default createStore({
   actions: {
     getLyric: async function (context, value) {
       let res = await getMusicLyric(value)
-      console.log('getLyric');
-      console.log(res);
+      // console.log('getLyric');
+      // console.log(res);
       context.commit("updateLyricList",res.data.lrc)
     },
     getLogin:async function(context,value){

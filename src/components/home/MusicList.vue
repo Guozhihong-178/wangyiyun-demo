@@ -1,8 +1,8 @@
 <template>
   <div class="musicList">
     <div class="top">
-      <div class="title">发现好歌单</div>
-      <van-button type="default">查看更多</van-button>
+      <div class="title">甄选歌单</div>
+      <!-- <van-button type="default">查看更多</van-button> -->
     </div>
     <div class="content">
       <van-swipe
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getMusicList } from "@/request/api/home";
+import { getMusicList, getHomeDiscovery } from "@/request/api/home";
 import { onMounted, reactive } from "vue";
 
 export default {
@@ -75,9 +75,12 @@ export default {
     }
     onMounted(async () => {
       let res = await getMusicList();
+      console.log(res);
       state.musicList = res.data.result;
       state.swiperWidth = (window.innerWidth) >= 750 ? 300 : 150;
-      console.log(state.swiperWidth);
+      // console.log(state.swiperWidth);
+      let res2 = await getHomeDiscovery();
+      console.log(res2);
     });
     return { state, getCount };
   },

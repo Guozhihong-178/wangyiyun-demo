@@ -80,7 +80,7 @@
         <svg class="icon liebiao" aria-hidden="true">
           <use xlink:href="#icon-xihuan1"></use>
         </svg>
-        <svg class="icon liebiao" aria-hidden="true">
+        <svg class="icon liebiao" aria-hidden="true" @click="showComment = true">
           <use xlink:href="#icon-pinglun-"></use>
         </svg>
       </div>
@@ -127,7 +127,15 @@
       position="bottom"
       :style="{ height: '60%', width: '100%' }"
     >
-    <currentPlayList />
+      <currentPlayList />
+    </van-popup>
+
+    <van-popup
+      v-model:show="showComment"
+      position="bottom"
+      :style="{ height: '100%', width: '100%' }"
+    >
+    <musicComments :musicList="musicList" @close="getValue" />
     </van-popup>
   </div>
 </template>
@@ -135,16 +143,17 @@
 import { Vue3Marquee } from "vue3-marquee";
 import { mapMutations, mapState } from "vuex";
 import currentPlayList from "@/components/item/currentPlayList.vue";
-
+import musicComments from "@/components/item/musicComments.vue";
 export default {
   data() {
     return {
       isLyricShow: false,
       showPopupList: false,
+      showComment:false
     };
   },
   mounted() {
-    // console.log(this.musicList);
+    console.log(this.musicList);
     this.addDuration();
   },
   props: ["musicList", "isbtnShow", "play", "addDuration"],
@@ -162,6 +171,9 @@ export default {
       }
       this.updatePlayListIndex(index);
     },
+    getValue(value){
+       this.showComment= value
+     },
     ...mapMutations(["updateDetailShow", "updatePlayListIndex"]),
   },
   computed: {
@@ -200,8 +212,8 @@ export default {
           }
         });
       }
-      console.log('单句歌词');
-      console.log(arr);
+      // console.log('单句歌词');
+      // console.log(arr);
       return arr;
     },
   },
@@ -228,6 +240,7 @@ export default {
   components: {
     Vue3Marquee,
     currentPlayList,
+    musicComments,
   },
 };
 </script>

@@ -10,7 +10,7 @@ export function getBanner(){
 export function getMusicList(){
     return service({
         method:'Get',
-        url: '/personalized?limit=10'
+        url: '/personalized?limit=6'
     })
 }
 
@@ -59,5 +59,13 @@ export function getLoginUser(){
     return service({
         method:"GET",
         url:`/user/detail?uid=1443539702`
+    })
+}
+
+//获取首页发现的内容
+export function getHomeDiscovery(){
+    return service({
+        method:"GET",
+        url:'/homepage/block/page'
     })
 }
