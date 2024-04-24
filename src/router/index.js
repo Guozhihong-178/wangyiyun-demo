@@ -61,7 +61,7 @@ const routes = [
     path: '/userInfo',
     name: 'UserInfo',
     beforeEnter:(to,from,next)=>{
-      if(store.state.isLogin || store.state.token ){
+      if(store.state.isLogin || store.state.token || sessionStorage.getItem('user')){
         next()
       }else{
         next('/login')

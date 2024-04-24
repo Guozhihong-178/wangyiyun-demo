@@ -66,7 +66,7 @@ export default {
           // this.$store.commit("updateToken", result.data.token);
           console.log(result);
           this.$store.commit("updateUser", result.data);
-          sessionStorage.setItem("user", JSON.stringify(result.data));
+          // sessionStorage.setItem("user", JSON.stringify(result.data));
           this.$router.push("/userInfo");
           // let result = await this.$store.dispatch("getLogin");
           // console.log("登录" + result);

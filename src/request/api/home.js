@@ -6,6 +6,7 @@ export function getBanner(){
     })
 }
 
+//推荐歌单
 export function getMusicList(){
     return service({
         method:'Get',

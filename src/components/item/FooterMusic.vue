@@ -19,7 +19,11 @@
       <svg class="icon liebiao" aria-hidden="true" @click="play" v-else>
         <use xlink:href="#icon-zanting1"></use>
       </svg>
-      <svg class="icon liebiao" aria-hidden="true">
+      <svg
+        class="icon liebiao"
+        aria-hidden="true"
+        @click="showPopupList = true"
+      >
         <use xlink:href="#icon-bofangliebiao"></use>
       </svg>
     </div>
@@ -39,18 +43,28 @@
         :addDuration="addDuration"
       />
     </van-popup>
+    <van-popup
+      v-model:show="showPopupList"
+      round
+      position="bottom"
+      :style="{ height: '60%', width: '100%' }"
+    >
+    <currentPlayList />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from "vuex";
 import MusicDetail from "@/components/item/MusicDetail.vue";
+import currentPlayList from "@/components/item/currentPlayList.vue";
 
 export default {
-  data(){
+  data() {
     return {
-      interVal:0
-    }
+      interVal: 0,
+      showPopupList: false,
+    };
   },
   methods: {
     play: function () {
@@ -71,8 +85,8 @@ export default {
         this.updateCurrentTime(this.$refs.audio.currentTime);
       }, 1000);
     },
-    addDuration:function(){
-      this.updateDuration(this.$refs.audio.duration)
+    addDuration: function () {
+      this.updateDuration(this.$refs.audio.duration);
     },
     ...mapMutations([
       "updateIsbtnShow",
@@ -100,9 +114,9 @@ export default {
     ...mapState(["playList", "playListIndex", "isbtnShow", "detailShow"]),
   },
   mounted() {
-      // console.log(this.$refs);
-      this.$store.dispatch("getLyric", this.playList[this.playListIndex].id);
-      // this.updateTime()
+    // console.log(this.$refs);
+    this.$store.dispatch("getLyric", this.playList[this.playListIndex].id);
+    // this.updateTime()
   },
   updated() {
     this.$store.dispatch("getLyric", this.playList[this.playListIndex].id);
@@ -110,6 +124,7 @@ export default {
   },
   components: {
     MusicDetail,
+    currentPlayList
   },
 };
 </script>
@@ -132,20 +147,20 @@ export default {
     justify-content: start;
     align-items: center;
     padding-left: 0.12rem;
-    div{
+    div {
       width: 85%;
       p {
-      width: 100%;
-      font-size: 0.3rem;
-      padding-bottom: 0.04rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    span {
-      font-size: 0.2rem;
-      color: #666;
-    }
+        width: 100%;
+        font-size: 0.3rem;
+        padding-bottom: 0.04rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      span {
+        font-size: 0.2rem;
+        color: #666;
+      }
     }
     img {
       width: 1rem;

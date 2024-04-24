@@ -116,21 +116,31 @@
       <svg class="icon" aria-hidden="true" @click="goPlay(1)">
         <use xlink:href="#icon-xiayishou"></use>
       </svg>
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon" aria-hidden="true" @click="showPopupList = true">
         <use xlink:href="#icon-bofangliebiao1"></use>
       </svg>
     </div>
     <div class="smallIcon"></div>
+    <van-popup
+      v-model:show="showPopupList"
+      round
+      position="bottom"
+      :style="{ height: '60%', width: '100%' }"
+    >
+    <currentPlayList />
+    </van-popup>
   </div>
 </template>
 <script>
 import { Vue3Marquee } from "vue3-marquee";
 import { mapMutations, mapState } from "vuex";
+import currentPlayList from "@/components/item/currentPlayList.vue";
 
 export default {
   data() {
     return {
       isLyricShow: false,
+      showPopupList: false,
     };
   },
   mounted() {
@@ -217,6 +227,7 @@ export default {
   },
   components: {
     Vue3Marquee,
+    currentPlayList,
   },
 };
 </script>
