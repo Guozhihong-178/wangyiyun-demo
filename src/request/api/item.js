@@ -39,3 +39,11 @@ export function getSongComments(id){
         url:`/comment/music?id=${id}&limit=20`
     })
 }
+
+//数字专辑详情
+export function getAlbumDetail(id){
+    return service({
+        method:'Get',
+        url:`/album/detail?id=${id}`
+    })
+}

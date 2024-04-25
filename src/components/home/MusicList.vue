@@ -12,7 +12,7 @@
         :show-indicators="false"
       >
         <van-swipe-item v-for="item in state.musicList" :key="item.id">
-          <router-link :to="{ path:'/itemMusic', query:{ id:item.id } }">
+          <router-link :to="{ path:'/itemMusic', query: { id: item.id } }">
             <img :src="item.picUrl" alt="" />
             <span>
               <svg class="icon" aria-hidden="true">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getMusicList, getHomeDiscovery } from "@/request/api/home";
+import { getMusicList } from "@/request/api/home";
 import { onMounted, reactive } from "vue";
 
 export default {
@@ -62,7 +62,7 @@ export default {
   setup() {
     const state = reactive({
       musicList: [],
-      swiperWidth: 150,
+      swiperWidth: 130,
     });
     function getCount(num) {
       if (num >= 100000000) {
@@ -75,12 +75,10 @@ export default {
     }
     onMounted(async () => {
       let res = await getMusicList();
-      console.log(res);
+      // console.log(res);
       state.musicList = res.data.result;
-      state.swiperWidth = (window.innerWidth) >= 750 ? 300 : 150;
+      state.swiperWidth = window.innerWidth >= 750 ? 280 : 130;
       // console.log(state.swiperWidth);
-      let res2 = await getHomeDiscovery();
-      console.log(res2);
     });
     return { state, getCount };
   },
@@ -91,8 +89,8 @@ export default {
 .musicList {
   width: 100%;
   height: 5rem;
-  padding: 0.3rem 0.2rem;
-  margin-bottom: 2rem;
+  padding: 0.6rem 0.3rem;
+  // margin-bottom: .2rem;
   .top {
     width: 100%;
     height: 0.6rem;
@@ -100,8 +98,8 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
     .title {
-      font-size: 0.4rem;
-      font-weight: 900;
+      font-size: 0.36rem;
+      font-weight: 800;
     }
     .van-button {
       font-size: 0.3rem;
@@ -137,8 +135,17 @@ export default {
             width: 0.3rem;
             height: 0.3rem;
             fill: #fff;
-            margin-right: .04rem;
+            margin-right: 0.04rem;
           }
+        }
+        .tit {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          /* 限制在一个块元素显示的文本的行数 */
+          -webkit-line-clamp: 2;
+          /* 设置或检索伸缩盒对象的子元素的排列方式 */
+          -webkit-box-orient: vertical;
         }
       }
     }

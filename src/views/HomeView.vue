@@ -4,6 +4,7 @@
     <SwiperTop />
     <!-- <IconList /> -->
     <MusicList />
+    <SongList />
   </div>
 </template>
 
@@ -13,13 +14,15 @@ import TopNav from '@/components/home/TopNav.vue'
 // import IconList from '@/components/home/IconList.vue'
 import SwiperTop from '@/components/home/SwiperTop.vue'
 import MusicList from '@/components/home/MusicList.vue'
+import SongList from '@/components/home/SongList.vue'
 export default {
   name: "HomeView",
   components: {
     TopNav,
     SwiperTop,
     // IconList,
-    MusicList
+    MusicList,
+    SongList
   },
 };
 </script>
