@@ -1,8 +1,5 @@
 function remSize(){
     let width = document.documentElement.clientWidth || window.innerWidth
-    // if(width >= 1250){
-    //     width = 1250
-    // }
     if(width >= 750){
         width = 750
     }

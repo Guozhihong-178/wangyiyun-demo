@@ -90,7 +90,7 @@
         type="range"
         class="range"
         min="0"
-        :max="duration"
+        :max="duration/1000"
         v-model="currentTime"
         step="0.05"
       />
@@ -154,9 +154,9 @@ export default {
   },
   mounted() {
     console.log(this.musicList);
-    this.addDuration();
+    console.log(this.duration);
   },
-  props: ["musicList", "isbtnShow", "play", "addDuration"],
+  props: ["musicList", "isbtnShow", "play"],
   methods: {
     backHome: function () {
       this.updateDetailShow();
@@ -174,7 +174,7 @@ export default {
     getValue(value){
        this.showComment= value
      },
-    ...mapMutations(["updateDetailShow", "updatePlayListIndex"]),
+    ...mapMutations(["updateDetailShow", "updatePlayListIndex","updateDuration"]),
   },
   computed: {
     ...mapState([
@@ -226,7 +226,9 @@ export default {
           this.$refs.musicLyric.scrollTop = p.offsetTop - 250;
         }
       }
-      if (newValue === this.duration) {
+      console.log(newValue);
+      if (newValue >= this.duration/1000) {
+        
         if (this.playListIndex === this.playList.length - 1) {
           this.updatePlayListIndex(0);
           this.play();
@@ -355,7 +357,7 @@ export default {
   }
   .active {
     color: #fff;
-    font-size: 0.46rem;
+    font-size: 0.44rem;
   }
 }
 .detilBottom {

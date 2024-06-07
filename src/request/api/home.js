@@ -47,12 +47,14 @@ export function checkVerCode(phone, code)
 //         withCredentials: true,
 //     })
 // }
-export function getPhoneLogin(){
-    return service({
-        method:"GET",
-        url:`/register/anonimous`,
-    })
-}
+
+//获取token
+// export function getPhoneLogin(){
+//     return service({
+//         method:"GET",
+//         url:`/register/anonimous`,
+//     })
+// }
 
 //获取用户详情
 export function getLoginUser(){

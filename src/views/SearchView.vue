@@ -1,7 +1,7 @@
 <template>
   <div class="searchview">
     <div class="searchTop">
-      <svg class="icon" aria-hidden="true" @click="$router.go(-1)">
+      <svg class="icon hand" aria-hidden="true" @click="$router.go(-1)">
         <use xlink:href="#icon-zuojiantou"></use>
       </svg>
       <input
@@ -15,14 +15,14 @@
     <div class="searchHistory">
       <div>
         <span class="searchSpan">搜索历史</span>
-        <svg class="icon" aria-hidden="true" @click="delHistory">
+        <svg class="icon hand" aria-hidden="true" @click="delHistory">
           <use xlink:href="#icon-trash"></use>
         </svg>
       </div>
       <span
         v-for="item in keyWorldList"
         :key="item"
-        class="spanKey"
+        class="spanKey hand"
         @click="searchHistory(item)"
       >
         {{ item }}
@@ -63,9 +63,8 @@
 
 <script>
 import { getSearchMusic } from "@/request/api/home.js";
-import { getMusicPlay } from "@/request/api/item";
 import { mapMutations, mapState } from "vuex";
-import { showToast } from 'vant';
+import { showToast } from "vant";
 
 export default {
   data() {
@@ -92,7 +91,7 @@ export default {
         }
         localStorage.setItem("keyWorldList", JSON.stringify(this.keyWorldList));
         let res = await getSearchMusic(this.searchKey);
-        // console.log(res);
+        console.log(this.searchList);
         this.searchList = res.data.result.songs;
         this.searchKey = "";
       }
@@ -103,8 +102,13 @@ export default {
     },
     async searchHistory(item) {
       this.keyWorldList.unshift(item);
+      // 去重
+      this.keyWorldList = [...new Set(this.keyWorldList)];
+      // 固定长度
+      if (this.keyWorldList.length > 10) {
+        this.keyWorldList.splice(this.keyWorldList.length - 1, 1);
+      }
       let res = await getSearchMusic(item);
-      //   console.log(res);
       this.searchList = res.data.result.songs;
       console.log(this.searchList);
     },
@@ -114,13 +118,14 @@ export default {
       item.ar = item.artists;
       this.pushPlayList(item);
       try {
-        const res = await getMusicPlay(item.al.id);
-        if (res.status === 200) {
-          this.updatePlayListIndex(this.$store.state.playList.length - 1);
-          this.updateMusicListName("搜索");
-        } else {
-          showToast('播放失败');
-        }
+        // const res = await getMusicPlay(item.id);
+        // if (res.status === 200) {
+        this.updatePlayListIndex(this.$store.state.playList.length - 1);
+        this.updateDuration(item.duration);
+        this.updateMusicListName("搜索");
+        // } else {
+        //   showToast('播放失败');
+        // }
       } catch (error) {
         console.error("获取音乐播放信息失败:", error);
         showToast("获取音乐播放信息失败");
@@ -130,6 +135,7 @@ export default {
       "pushPlayList",
       "updatePlayListIndex",
       "updateMusicListName",
+      "updateDuration",
     ]),
   },
 };
@@ -137,7 +143,10 @@ export default {
 
 <style lang="less" scoped>
 .searchview {
-  background: #f5f6fd;
+  background: #f6f7fb;
+  .hand{
+    cursor: pointer;
+  }
   .searchTop {
     width: 100%;
     height: 1rem;
@@ -193,7 +202,8 @@ export default {
     }
   }
   .itemList {
-    padding: 0 0.26rem 0.4rem;
+    padding: 0.2rem 0.3rem 0.4rem;
+    background: #fff;
     .item {
       display: flex;
       align-items: center;

@@ -1,5 +1,4 @@
 <template>
-
   <div class="itemList">
     <div v-for="(item, index) in playList" :key="item.id" class="item">
       <div class="itemleft" @click="playMusic(index)">
@@ -29,35 +28,29 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import { showToast } from "vant";
-import { getMusicPlay } from "@/request/api/item";
 
 export default {
   computed: {
     ...mapState(["playList"]),
   },
   mounted() {
-    console.log(111);
     console.log(this.playList);
   },
   methods: {
     playMusic: async function (index) {
       try {
-        const res = await getMusicPlay(this.playList[index].id);
-        if (res.status === 200) {
-          this.updatePlayListIndex(index);
-        } else {
-          this.updatePlayListIndex(index + 1);
-        }
+        this.updatePlayListIndex(index);
+        this.updateDuration(item.duration);
       } catch (error) {
         console.error("获取音乐播放信息失败:", error);
         showToast("获取音乐播放信息失败");
         this.updatePlayListIndex(index + 1);
       }
     },
-    delMusic(index){
-        this.playList.splice(index,1)
+    delMusic(index) {
+      this.playList.splice(index, 1);
     },
-    ...mapMutations(["updatePlayList", "updatePlayListIndex"]),
+    ...mapMutations(["updatePlayList", "updatePlayListIndex","updateDuration"]),
   },
 };
 </script>

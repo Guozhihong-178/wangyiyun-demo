@@ -25,12 +25,13 @@ export function getMusicLyric(id){
 }
 
 //音乐是否可用
-export function getMusicPlay(id){
-    return service({
-        method:'Get',
-        url:`/check/music?id=${id}`
-    })
-}
+//该aip不可用
+// export function getMusicPlay(id){
+//     return service({
+//         method:'Get',
+//         url:`/check/music?id=${id}`
+//     })
+// }
 
 //歌曲评论
 export function getSongComments(id){

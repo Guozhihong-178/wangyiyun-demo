@@ -1,7 +1,7 @@
 <template>
   <div class="topNav">
     <div>
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon" aria-hidden="true" @click="show = true">
         <use xlink:href="#icon-bars"></use>
       </svg>
     </div>
@@ -18,15 +18,37 @@
     </div>
   </div>
   <div class="infoUserTop">
-    <img :src="user.profile.avatarUrl" alt="" class="profileimg" />
+    <img :src="user ? user.profile.avatarUrl : 'https://www.100chui.com/public/pc/common/default_head.png'" alt="" class="profileimg" />
     <div class="name">{{ user.profile.nickname }}</div>
   </div>
+  <van-popup
+    v-model:show="show"
+    position="left"
+    :style="{ height: '100%', width: '80%' }"
+  >
+    <SideBar />
+  </van-popup>
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
+import SideBar from "@/components/home/SideBar.vue";
+
 export default {
+  data() {
+    return {
+      show: false,
+    };
+  },
+  // created(){
+  //   if(!this.user){
+  //     this.$router.push('/login')
+  //   }
+  // },
+  components: {
+    SideBar,
+  },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user","isLogin"]),
   },
   // methods: {
   //   ...mapMutations(["updateUser"]),

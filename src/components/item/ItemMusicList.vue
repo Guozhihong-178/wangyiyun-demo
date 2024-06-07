@@ -19,7 +19,7 @@
     </div>
     <div class="itemList">
       <div v-for="(item, index) in songs" :key="item.id" class="item">
-        <div class="itemleft" @click="playMusic(index)">
+        <div class="itemleft" @click="playMusic(item, index)">
           <span class="number">{{ index + 1 }}</span>
           <div class="songDetail">
             <div class="songName">{{ item.name }}</div>
@@ -47,7 +47,6 @@
 </template>
 <script>
 import { mapMutations } from "vuex";
-import { getMusicPlay } from "@/request/api/item";
 import { showToast } from "vant";
 
 export default {
@@ -56,22 +55,18 @@ export default {
   },
   props: ["songs"],
   methods: {
-    playMusic: async function (index) {
-      this.updatePlayList(this.songs);
+    playMusic: async function (item, index) {
+      this.updateDuration(item.dt);
       try {
-        const res = await getMusicPlay(this.songs[index].id);
-        if (res.status === 200) {
-          this.updatePlayListIndex(index);
-        } else {
-          this.updatePlayListIndex(index + 1);
-        }
+        this.updatePlayList(this.songs);
+        this.updatePlayListIndex(index);
       } catch (error) {
         console.error("获取音乐播放信息失败:", error);
         showToast("获取音乐播放信息失败");
         this.updatePlayListIndex(index + 1);
       }
     },
-    ...mapMutations(["updatePlayList", "updatePlayListIndex"]),
+    ...mapMutations(["updatePlayList", "updatePlayListIndex", "updateDuration"]),
   },
 };
 </script>

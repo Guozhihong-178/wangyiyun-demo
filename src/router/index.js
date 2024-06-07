@@ -41,14 +41,6 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "login" */ '../views/Login/Login.vue')
   },
-  // {
-  //   path: '/login/phone',
-  //   name: 'Phone',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "Phone" */ '../views/Login/Phone.vue')
-  // },
   {
     path: '/login/vcode',
     name: 'VerCode',
@@ -60,10 +52,11 @@ const routes = [
   {
     path: '/userInfo',
     name: 'UserInfo',
-    beforeEnter:(to,from,next)=>{
-      if(store.state.isLogin || store.state.token || sessionStorage.getItem('user')){
+    beforeEnter: (to, from, next) => {
+      // if(store.state.isLogin || store.state.token || sessionStorage.getItem('user')){
+      if (store.state.isLogin) {
         next()
-      }else{
+      } else {
         next('/login')
       }
     },
@@ -78,11 +71,11 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeEach((to,from)=>{
-  if(to.path=='/login'||to.path=='/login/vcode'){
-    store.state.isFooterMusic=false
-  }else{
-    store.state.isFooterMusic=true
+router.beforeEach((to, from) => {
+  if (to.path == '/login' || to.path == '/login/vcode') {
+    store.state.isFooterMusic = false
+  } else {
+    store.state.isFooterMusic = true
   }
 })
 export default router
