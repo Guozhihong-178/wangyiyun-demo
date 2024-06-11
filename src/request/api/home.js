@@ -60,7 +60,7 @@ export function checkVerCode(phone, code)
 export function getLoginUser(){
     return service({
         method:"GET",
-        url:`/user/detail?uid=1443539702`
+        url:`/user/detail?uid=144*******`
     })
 }
 
