@@ -1,9 +1,9 @@
 <template>
   <div class="footerMusic">
     <div class="footerLeft" @click="updateDetailShow">
-      <img :src="playList[playListIndex].al.picUrl" alt="" />
+      <img :src="playList[playListIndex] && playList[playListIndex].al.picUrl ? playList[playListIndex].al.picUrl : 'https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg'" alt="" />
       <div>
-        <p>{{ playList[playListIndex].name }}</p>
+        <p>{{ playList[playListIndex] && playList[playListIndex].name }}</p>
         <span>横滑切换上下首哦</span>
       </div>
     </div>

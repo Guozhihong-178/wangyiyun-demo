@@ -226,7 +226,7 @@ export default {
           this.$refs.musicLyric.scrollTop = p.offsetTop - 250;
         }
       }
-      console.log(newValue);
+      // console.log(newValue);
       if (newValue >= this.duration/1000) {
         
         if (this.playListIndex === this.playList.length - 1) {

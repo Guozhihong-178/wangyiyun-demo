@@ -1,7 +1,7 @@
 <template>
   <div class="itemList">
     <div v-for="(item, index) in playList" :key="item.id" class="item">
-      <div class="itemleft" @click="playMusic(index)">
+      <div class="itemleft" @click="playMusic(item,index)">
         <!-- <span class="number">{{ index + 1 }}</span> -->
         <div class="songDetail">
           <div class="songName">{{ item.name }}</div>
@@ -37,7 +37,7 @@ export default {
     console.log(this.playList);
   },
   methods: {
-    playMusic: async function (index) {
+    playMusic: async function (item,index) {
       try {
         this.updatePlayListIndex(index);
         this.updateDuration(item.duration);
