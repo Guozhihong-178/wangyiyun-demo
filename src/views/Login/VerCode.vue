@@ -60,7 +60,7 @@ export default {
         let res = await checkVerCode(this.phoneNumber, newCode);
         // console.log("checkVerCode");
         // console.log(res.data);
-        if (res.status == 200) {
+        if (res.status === 200) {
           let result = await getLoginUser();
           this.$store.commit("updateIsLogin", true);
           // this.$store.commit("updateToken", result.data.token);
